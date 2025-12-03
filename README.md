@@ -47,3 +47,194 @@ Pay special attention to what data the frontend is expecting from each API respo
 By making notes ahead of time, you will practice the core skill of being able to read and understand code and will have a simple plan to follow to build out the endpoints of your backend API.
 
 > View the [Frontend README](./frontend/README.md) for more details.
+
+---
+
+## Project Setup
+
+### Backend
+1. Create the `trivia` database with `trivia.psql`
+2. (Optional) Create `trivia_test` in the same way.
+3. In the `backend` folder create and activate a python venv
+4. Install all  dependencies with `pip install -r requirements.txt`
+5. Set environment variables `FLASK_APP=flaskr` and `FLASK_ENV=development`
+6. Start server: `flask run`.
+
+### Frontend
+1. In the `frontend` folder install dependencies with `npm install`
+2. Start the App with `npm start`
+
+---
+
+## API Endpoints
+
+
+### GET `/categories`
+- **Description**: Returns all categories
+- **Request parameters**: None
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "categories": {
+    "1": "Science",
+    "2": "Art"
+  }
+}
+```
+
+
+### GET `/questions?page=<integer>`
+- **Description**: Returns a paginated list of questions
+- **Request parameters**: `page` optional, integer, default is 1
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "questions": [
+    {
+      "id": 1,
+      "question": "Question text",
+      "answer": "Answer text",
+      "difficulty": 1,
+      "category": 1
+    }
+  ],
+  "totalQuestions": 20,
+  "categories": {
+    "1": "Science",
+    "2": "Art"
+  },
+  "currentCategory": null
+}
+```
+
+
+### GET `/categories/<id>/questions`
+- **Description**: Returns all questions for a given category
+- **Request parameters**: `id` path parameter, integer
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "questions": [
+    {
+      "id": 1,
+      "question": "Question text",
+      "answer": "Answer text",
+      "difficulty": 1,
+      "category": 1
+    }
+  ],
+  "totalQuestions": 5,
+  "currentCategory": "Science"
+}
+```
+
+
+### DELETE `/questions/<id>`
+- **Description**: Deletes a question by id
+- **Request parameters**: `id` path parameter, integer
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "deleted": 3
+}
+```
+
+### POST `/questions` (create)
+- **Description**: Creates a new question
+- **Request body**:
+
+```json
+{
+  "question": "New question text",
+  "answer": "New answer text",
+  "difficulty": 1,
+  "category": 1
+}
+```
+
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "created": 21,
+  "questions": [
+    {
+      "id": 11,
+      "question": "Question text",
+      "answer": "Answer text",
+      "difficulty": 1,
+      "category": 1
+    }
+  ],
+  "totalQuestions": 21
+}
+```
+
+
+### POST `/questions` (search)
+- **Description**: Searches questions that contain a search term
+- **Request body**:
+
+```json
+{
+  "searchTerm": "title"
+}
+```
+
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "questions": [
+    {
+      "id": 2,
+      "question": "Question with title",
+      "answer": "Answer text",
+      "difficulty": 2,
+      "category": 2
+    }
+  ],
+  "totalQuestions": 1,
+  "currentCategory": null
+}
+```
+
+
+### POST `/quizzes`
+- **Description**: Returns a random question for the quiz that was not asked before
+- **Request body**:
+
+```json
+{
+  "previous_questions": [1, 2],
+  "quiz_category": {
+    "id": 1,
+    "type": "Science"
+  }
+}
+```
+
+- **Response body**:
+
+```json
+{
+  "success": true,
+  "question": {
+    "id": 3,
+    "question": "Next question text",
+    "answer": "Answer text",
+    "difficulty": 2,
+    "category": 1
+  }
+}
+```

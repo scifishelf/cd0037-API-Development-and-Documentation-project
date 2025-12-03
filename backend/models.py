@@ -1,16 +1,22 @@
 from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
-database_name = 'trivia'
-database_user = 'postgres'
-database_password = 'password'
-database_host = 'localhost:5432'
-database_path = f'postgresql://{database_user}:{database_password}@{database_host}/{database_name}'
+import os
+
+# Default connection values can be overridden with env secrets.
+database_name = os.getenv("TRIVIA_DB_NAME", "trivia")
+database_user = os.getenv("TRIVIA_DB_USER", "postgres")
+database_password = os.getenv("TRIVIA_DB_PASSWORD", "password")
+database_host = os.getenv("TRIVIA_DB_HOST", "localhost:5432")
+
+database_path = os.getenv(
+    "DATABASE_URL",
+    f"postgresql://{database_user}:{database_password}@{database_host}/{database_name}",
+)
 
 db = SQLAlchemy()
 
 """
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
+setup the database
 """
 def setup_db(app, database_path=database_path):
     app.config['SQLALCHEMY_DATABASE_URI'] = database_path
@@ -18,7 +24,7 @@ def setup_db(app, database_path=database_path):
     db.init_app(app)
 
 """
-Question
+Question class
 """
 class Question(db.Model):
     __tablename__ = 'questions'
@@ -56,7 +62,7 @@ class Question(db.Model):
         }
 
 """
-Category
+Category class
 """
 class Category(db.Model):
     __tablename__ = 'categories'
