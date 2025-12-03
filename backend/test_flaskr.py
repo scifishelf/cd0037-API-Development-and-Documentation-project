@@ -187,9 +187,9 @@ class TriviaTestCase(unittest.TestCase):
         self.assertFalse(data["success"])
         self.assertEqual(data["error"], 404)
 
-
     # ------------------------------------------------------------
     # Play quiz test
+
     def test_play_quiz_success(self):
         """Test playing quiz and receiving a question."""
         quiz_payload = {

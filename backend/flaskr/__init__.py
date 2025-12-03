@@ -29,7 +29,7 @@ def create_app(test_config=None):
         database_path = test_config.get("SQLALCHEMY_DATABASE_URI")
         setup_db(app, database_path=database_path)
 
-    # Enable CORS for all 
+    # Enable CORS for all
     CORS(app, resources={r"*": {"origins": "*"}})
 
     with app.app_context():
